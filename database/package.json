@@ -6,13 +6,19 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "prisma migrate dev",
-    "deploy": "prisma migrate deploy"
+    "deploy": "prisma migrate deploy",
+    "dev": "nodemon app.js",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.12.1",
+    "express": "^4.19.2",
     "prisma": "^5.12.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
   }
 }
