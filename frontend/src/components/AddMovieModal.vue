@@ -107,6 +107,14 @@ export default {
     closeModal() {
       this.$emit('close');
     },
+    resetForm() {
+      this.newMovie = {
+        title: '',
+        director: '',
+        releaseYear: '',
+        image: '',
+      };
+    },
   },
 };
 </script>
