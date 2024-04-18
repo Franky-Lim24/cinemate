@@ -1,9 +1,11 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
+const cors = require('cors');
 
 const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // Get all movies
 app.get('/movies', async (req, res) => {
