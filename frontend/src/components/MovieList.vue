@@ -15,7 +15,12 @@
         :key="movie.id"
         class="max-w-sm rounded overflow-hidden shadow-lg"
       >
-        <img class="w-full" :src="movie.image" alt="Sunset in the mountains" />
+        <img
+          @click="openDetailsModal(movie)"
+          class="w-full cursor-pointer"
+          :src="movie.image"
+          :alt="movie.title"
+        />
         <div class="px-6 py-4">
           <div class="font-bold text-xl mb-2">{{ movie.title }}</div>
           <p class="text-white-700 text-base">Director: {{ movie.director }}</p>
@@ -26,23 +31,34 @@
       </div>
     </div>
     <AddMovieModal
-      :isOpen="showModal"
-      @close="showModal = false"
+      :isOpen="showAddModal"
+      @close="showAddModal = false"
       @add-movie="addMovie"
+    />
+    <MovieDetailsModal
+      :isOpen="showDetailsModal"
+      :movie="selectedMovie"
+      @close="showDetailsModal = false"
+      @edit="editMovie"
+      @delete="deleteMovie"
     />
   </div>
 </template>
 
 <script>
 import AddMovieModal from './AddMovieModal.vue';
+import MovieDetailsModal from './MovieDetailsModal.vue';
 
 export default {
   components: {
     AddMovieModal,
+    MovieDetailsModal,
   },
   data() {
     return {
-      showModal: false,
+      showAddModal: false,
+      showDetailsModal: false,
+      selectedMovie: null,
       movies: [
         {
           id: 1,
@@ -113,7 +129,7 @@ export default {
   },
   methods: {
     openModal() {
-      this.showModal = true;
+      this.showAddModal = true;
     },
     addMovie(newMovie) {
       this.movies.push({
@@ -121,6 +137,23 @@ export default {
         id: this.movies.length + 1,
       });
       this.showModal = false;
+    },
+    openDetailsModal(movie) {
+      this.selectedMovie = movie;
+      this.showDetailsModal = true;
+    },
+    editMovie(updatedMovie) {
+      const index = this.movies.findIndex(
+        (movie) => movie.id === updatedMovie.id
+      );
+      if (index !== -1) {
+        this.movies[index] = { ...updatedMovie }; // Direct assignment for reactivity in Vue 3
+      }
+      this.showDetailsModal = false;
+    },
+    deleteMovie(id) {
+      this.movies = this.movies.filter((movie) => movie.id !== id);
+      this.showDetailsModal = false;
     },
   },
 };
