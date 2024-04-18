@@ -3,7 +3,7 @@
     <div class="flex justify-between items-center mb-4">
       <h1 class="text-xl font-bold">Movies List</h1>
       <button
-        @click="addMovie"
+        @click="openModal"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Add Movie
@@ -25,13 +25,24 @@
         </div>
       </div>
     </div>
+    <AddMovieModal
+      :isOpen="showModal"
+      @close="showModal = false"
+      @add-movie="addMovie"
+    />
   </div>
 </template>
 
 <script>
+import AddMovieModal from './AddMovieModal.vue';
+
 export default {
+  components: {
+    AddMovieModal,
+  },
   data() {
     return {
+      showModal: false,
       movies: [
         {
           id: 1,
@@ -101,8 +112,15 @@ export default {
     };
   },
   methods: {
-    addMovie() {
-      console.log('Add movie button clicked');
+    openModal() {
+      this.showModal = true;
+    },
+    addMovie(newMovie) {
+      this.movies.push({
+        ...newMovie,
+        id: this.movies.length + 1,
+      });
+      this.showModal = false;
     },
   },
 };
