@@ -6,7 +6,7 @@ const api = axios.create({
 });
 
 // Function to get movies
-function getMovies() {
+export function GetMovies() {
   return api
     .get('/movies')
     .then((response) => response.data)
@@ -14,7 +14,7 @@ function getMovies() {
 }
 
 // Function to add a new movie
-function addMovie(movieData) {
+export function AddMovie(movieData) {
   return api
     .post('/movies', movieData)
     .then((response) => response.data)
@@ -22,7 +22,7 @@ function addMovie(movieData) {
 }
 
 // Function to update a movie
-function updateMovie(id, movieData) {
+export function UpdateMovie(id, movieData) {
   return api
     .put(`/movies/${id}`, movieData)
     .then((response) => response.data)
@@ -30,16 +30,9 @@ function updateMovie(id, movieData) {
 }
 
 // Function to delete a movie
-function deleteMovie(id) {
+export function DeleteMovie(id) {
   return api
     .delete(`/movies/${id}`)
     .then((response) => response.data)
     .catch((error) => console.error('Error deleting movie:', error));
 }
-
-module.exports = {
-  getMovies,
-  addMovie,
-  updateMovie,
-  deleteMovie,
-};

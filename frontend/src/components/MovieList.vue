@@ -48,6 +48,12 @@
 <script>
 import AddMovieModal from './AddMovieModal.vue';
 import MovieDetailsModal from './MovieDetailsModal.vue';
+import {
+  GetMovies as fetchMoviesFromDB,
+  AddMovie as addMovieToDB,
+  UpdateMovie as updatedMovieInDB,
+  DeleteMovie as deleteMovieFromDB,
+} from '../services/movies';
 
 export default {
   components: {
@@ -136,6 +142,7 @@ export default {
         ...newMovie,
         id: this.movies.length + 1,
       });
+      addMovieToDB(newMovie);
       this.showModal = false;
     },
     openDetailsModal(movie) {
@@ -149,10 +156,12 @@ export default {
       if (index !== -1) {
         this.movies[index] = { ...updatedMovie }; // Direct assignment for reactivity in Vue 3
       }
+      updatedMovieInDB(updatedMovie);
       this.showDetailsModal = false;
     },
     deleteMovie(id) {
       this.movies = this.movies.filter((movie) => movie.id !== id);
+      deleteMovieFromDB(id);
       this.showDetailsModal = false;
     },
   },
