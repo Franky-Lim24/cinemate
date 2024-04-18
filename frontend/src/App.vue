@@ -1,17 +1,10 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import './assets/styles/tailwind.css';
+import MovieList from './components/MovieList.vue';
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <MovieList />
 </template>
 
 <style scoped>
