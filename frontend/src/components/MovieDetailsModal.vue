@@ -111,7 +111,6 @@ export default {
   },
   methods: {
     submitEdit() {
-      console.log(this.editableMovie);
       this.$emit('edit', this.editableMovie);
       this.closeModal();
     },

@@ -69,75 +69,16 @@ export default {
       showAddModal: false,
       showDetailsModal: false,
       selectedMovie: null,
-      movies: [
-        {
-          id: 1,
-          title: 'Inception',
-          director: 'Christopher Nolan',
-          releaseYear: '2010',
-          image:
-            'https://m.media-amazon.com/images/M/MV5BMjExMjkwNTQ0Nl5BMl5BanBnXkFtZTcwNTY0OTk1Mw@@._V1_.jpg',
-        },
-        {
-          id: 2,
-          title: 'Interstellar',
-          director: 'Christopher Nolan',
-          releaseYear: '2014',
-          image:
-            'https://m.media-amazon.com/images/M/MV5BZjdkOTU3MDktN2IxOS00OGEyLWFmMjktY2FiMmZkNWIyODZiXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg',
-        },
-        {
-          id: 3,
-          title: 'The Matrix',
-          director: 'Lana Wachowski, Lilly Wachowski',
-          releaseYear: '1999',
-          image:
-            'https://m.media-amazon.com/images/M/MV5BNzQzOTk3OTAtNDQ0Zi00ZTVkLWI0MTEtMDllZjNkYzNjNTc4L2ltYWdlXkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_.jpg',
-        },
-        {
-          id: 4,
-          title: 'Pulp Fiction',
-          director: 'Quentin Tarantino',
-          releaseYear: '1994',
-          image:
-            'https://m.media-amazon.com/images/M/MV5BNGNhMDIzZTUtNTBlZi00MTRlLWFjM2ItYzViMjE3YzI5MjljXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg',
-        },
-        {
-          id: 5,
-          title: 'The Godfather',
-          director: 'Francis Ford Coppola',
-          releaseYear: '1972',
-          image:
-            'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg',
-        },
-        {
-          id: 6,
-          title: 'Fight Club',
-          director: 'David Fincher',
-          releaseYear: '1999',
-          image:
-            'https://m.media-amazon.com/images/M/MV5BMmEzNTkxYjQtZTc0MC00YTVjLTg5ZTEtZWMwOWVlYzY0NWIwXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_.jpg',
-        },
-        {
-          id: 7,
-          title: 'Forrest Gump',
-          director: 'Robert Zemeckis',
-          releaseYear: '1994',
-          image:
-            'https://m.media-amazon.com/images/M/MV5BNWIwODRlZTUtY2U3ZS00Yzg1LWJhNzYtMmZiYmEyNmU1NjMzXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_FMjpg_UX1000_.jpg',
-        },
-        {
-          id: 8,
-          title: 'The Dark Knight',
-          director: 'Christopher Nolan',
-          releaseYear: '2008',
-          image:
-            'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_.jpg',
-        },
-      ],
+      movies: [],
     };
   },
+  created() {
+    this.fetchMovies();
+  },
   methods: {
+    async fetchMovies() {
+      this.movies = await fetchMoviesFromDB();
+    },
     openModal() {
       this.showAddModal = true;
     },
@@ -161,7 +102,6 @@ export default {
       if (index !== -1) {
         this.movies[index] = { ...updatedMovie }; // Direct assignment for reactivity in Vue 3
       }
-      console.log(updatedMovie);
       updatedMovieInDB(updatedMovie.id, updatedMovie);
       this.triggerToast('Movie updated successfully!');
       this.showDetailsModal = false;
