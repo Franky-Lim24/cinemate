@@ -42,12 +42,15 @@
       @edit="editMovie"
       @delete="deleteMovie"
     />
+    <ToastNotification ref="toastComponent" />
   </div>
 </template>
 
 <script>
 import AddMovieModal from './AddMovieModal.vue';
 import MovieDetailsModal from './MovieDetailsModal.vue';
+import ToastNotification from './ToastNotification.vue';
+
 import {
   GetMovies as fetchMoviesFromDB,
   AddMovie as addMovieToDB,
@@ -59,6 +62,7 @@ export default {
   components: {
     AddMovieModal,
     MovieDetailsModal,
+    ToastNotification,
   },
   data() {
     return {
@@ -143,6 +147,7 @@ export default {
         id: this.movies.length + 1,
       });
       addMovieToDB(newMovie);
+      this.triggerToast('Movie added successfully!');
       this.showModal = false;
     },
     openDetailsModal(movie) {
@@ -156,13 +161,19 @@ export default {
       if (index !== -1) {
         this.movies[index] = { ...updatedMovie }; // Direct assignment for reactivity in Vue 3
       }
-      updatedMovieInDB(updatedMovie);
+      console.log(updatedMovie);
+      updatedMovieInDB(updatedMovie.id, updatedMovie);
+      this.triggerToast('Movie updated successfully!');
       this.showDetailsModal = false;
     },
     deleteMovie(id) {
       this.movies = this.movies.filter((movie) => movie.id !== id);
       deleteMovieFromDB(id);
+      this.triggerToast('Movie deleted successfully!');
       this.showDetailsModal = false;
+    },
+    triggerToast(message) {
+      this.$refs.toastComponent.showToast(message);
     },
   },
 };
