@@ -1,9 +1,11 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
+const cors = require('cors');
 
 const prisma = new PrismaClient();
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 // Get all movies
 app.get('/movies', async (req, res) => {
@@ -26,9 +28,9 @@ app.get('/movies/:id', async (req, res) => {
 
 // Create a new movie
 app.post('/movies', async (req, res) => {
-  const { title, director, releaseDate, genre, duration, rating } = req.body;
+  const { title, director, releaseYear, image } = req.body;
   const movie = await prisma.movie.create({
-    data: { title, director, releaseDate, genre, duration, rating },
+    data: { title, director, releaseYear, image },
   });
   res.status(201).json(movie);
 });
@@ -36,11 +38,11 @@ app.post('/movies', async (req, res) => {
 // Update a movie by id
 app.put('/movies/:id', async (req, res) => {
   const { id } = req.params;
-  const { title, director, releaseDate, genre, duration, rating } = req.body;
+  const { title, director, releaseYear, image } = req.body;
   try {
     const updatedMovie = await prisma.movie.update({
       where: { id: parseInt(id) },
-      data: { title, director, releaseDate, genre, duration, rating },
+      data: { title, director, releaseYear, image },
     });
     res.json(updatedMovie);
   } catch (error) {
