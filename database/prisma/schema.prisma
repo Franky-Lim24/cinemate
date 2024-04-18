@@ -12,3 +12,13 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Movie {
+  id          Int      @id @default(autoincrement())
+  title       String
+  director    String?
+  releaseDate DateTime?
+  genre       String?
+  duration    Int?
+  rating      Float?
+}
