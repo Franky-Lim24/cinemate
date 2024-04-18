@@ -101,6 +101,7 @@ export default {
   methods: {
     submitForm() {
       this.$emit('add-movie', this.newMovie);
+      this.resetForm(); // Reset form after submission
       this.closeModal();
     },
     closeModal() {
