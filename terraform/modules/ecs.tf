@@ -55,6 +55,12 @@ resource "aws_ecs_service" "frontend_service" {
   desired_count   = 1
   launch_type     = "FARGATE"
 
+  load_balancer {
+    target_group_arn = aws_lb_target_group.frontend.arn
+    container_name   = "frontend"
+    container_port   = 80
+  }
+
   network_configuration {
     subnets         = [aws_subnet.public1.id, aws_subnet.public2.id]
     security_groups = [aws_security_group.frontend.id]
@@ -73,12 +79,18 @@ resource "aws_ecs_service" "backend_service" {
   desired_count   = 1
   launch_type     = "FARGATE"
 
+  load_balancer {
+    target_group_arn = aws_lb_target_group.backend.arn
+    container_name   = "backend"
+    container_port   = 3000
+  }
+
   network_configuration {
     subnets         = [aws_subnet.private.id]  # Assuming private subnet for backend
     security_groups = [aws_security_group.backend.id]
     assign_public_ip = false
   }
-
+  
   service_registries {
     registry_arn = aws_service_discovery_service.backend.arn
   }
