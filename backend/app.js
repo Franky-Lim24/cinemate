@@ -8,13 +8,13 @@ app.use(express.json());
 app.use(cors());
 
 // Get all movies
-app.get('/movies', async (req, res) => {
+app.get('/api/movies', async (req, res) => {
   const movies = await prisma.movie.findMany();
   res.json(movies);
 });
 
 // Get a movie by id
-app.get('/movies/:id', async (req, res) => {
+app.get('/api/movies/:id', async (req, res) => {
   const { id } = req.params;
   const movie = await prisma.movie.findUnique({
     where: { id: parseInt(id) },
@@ -27,7 +27,7 @@ app.get('/movies/:id', async (req, res) => {
 });
 
 // Create a new movie
-app.post('/movies', async (req, res) => {
+app.post('/api/movies', async (req, res) => {
   const { title, director, releaseYear, image } = req.body;
   const movie = await prisma.movie.create({
     data: { title, director, releaseYear, image },
@@ -36,7 +36,7 @@ app.post('/movies', async (req, res) => {
 });
 
 // Update a movie by id
-app.put('/movies/:id', async (req, res) => {
+app.put('/api/movies/:id', async (req, res) => {
   const { id } = req.params;
   const { title, director, releaseYear, image } = req.body;
   try {
@@ -51,7 +51,7 @@ app.put('/movies/:id', async (req, res) => {
 });
 
 // Delete a movie by id
-app.delete('/movies/:id', async (req, res) => {
+app.delete('/api/movies/:id', async (req, res) => {
   const { id } = req.params;
   try {
     await prisma.movie.delete({
