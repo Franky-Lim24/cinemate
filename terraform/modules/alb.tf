@@ -58,27 +58,30 @@ resource "aws_lb_target_group" "frontend" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
+  target_type = "ip"  
 
   health_check {
-    interval            = 30
     path                = "/"
     protocol            = "HTTP"
-    timeout             = 5
     healthy_threshold   = 2
     unhealthy_threshold = 2
+    timeout             = 5
+    interval            = 30
     matcher             = "200"
   }
 }
+
 
 resource "aws_lb_target_group" "backend" {
   name     = "backend-tg"
   port     = 3000
   protocol = "HTTP"
   vpc_id   = aws_vpc.main.id
+  target_type = "ip"  
 
   health_check {
     interval            = 30
-    path                = "/health"
+    path                = "/"
     protocol            = "HTTP"
     timeout             = 5
     healthy_threshold   = 2
