@@ -44,6 +44,12 @@ resource "aws_ecs_task_definition" "backend_task" {
           hostPort      = 3000
         }
       ]
+      environment = [
+        {
+          name  = "DATABASE_URL"
+          value = "mysql://${aws_db_instance.backend_db.username}:${aws_db_instance.backend_db.password}@${aws_db_instance.backend_db.address}/${aws_db_instance.backend_db.db_name}"
+        }
+      ]
     }
   ])
 }
