@@ -50,6 +50,14 @@ resource "aws_ecs_task_definition" "backend_task" {
           value = "mysql://${aws_db_instance.backend_db.username}:${aws_db_instance.backend_db.password}@${aws_db_instance.backend_db.address}/${aws_db_instance.backend_db.db_name}"
         }
       ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.ecs_log_group.name
+          awslogs-region        = "us-west-2"
+          awslogs-stream-prefix = "ecs"
+        }
+      }
     }
   ])
 }
