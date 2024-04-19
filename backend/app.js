@@ -9,7 +9,7 @@ app.use(cors());
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.send('Welcome to Cinemate API');
+  res.status(200).send('Welcome to Cinemate API');
 });
 
 // Get all movies
@@ -68,6 +68,6 @@ app.delete('/api/movies/:id', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('Server is running on http://localhost:3000');
+app.listen(80, () => {
+  console.log('Server is running on http://localhost:80');
 });

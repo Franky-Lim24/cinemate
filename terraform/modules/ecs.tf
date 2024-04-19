@@ -40,8 +40,8 @@ resource "aws_ecs_task_definition" "backend_task" {
       essential = true
       portMappings = [
         {
-          containerPort = 3000
-          hostPort      = 3000
+          containerPort = 80
+          hostPort      = 80
         }
       ]
       environment = [
@@ -54,7 +54,7 @@ resource "aws_ecs_task_definition" "backend_task" {
         logDriver = "awslogs"
         options = {
           awslogs-group         = aws_cloudwatch_log_group.ecs_log_group.name
-          awslogs-region        = "us-west-2"
+          awslogs-region        = "ap-southeast-1"
           awslogs-stream-prefix = "ecs"
         }
       }
@@ -96,13 +96,13 @@ resource "aws_ecs_service" "backend_service" {
   load_balancer {
     target_group_arn = aws_lb_target_group.backend.arn
     container_name   = "backend"
-    container_port   = 3000
+    container_port   = 80
   }
 
   network_configuration {
     subnets         = [aws_subnet.private.id]  # Assuming private subnet for backend
     security_groups = [aws_security_group.backend.id]
-    assign_public_ip = false
+    assign_public_ip = true
   }
   
   service_registries {
