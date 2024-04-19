@@ -87,7 +87,7 @@ resource "aws_security_group" "db" {
 
 resource "aws_db_subnet_group" "main" {
   name       = "main-db-subnet-group"
-  subnet_ids = [aws_subnet.private.id, aws_subnet.public.id]
+  subnet_ids = [aws_subnet.private.id, aws_subnet.public1.id, aws_subnet.public2.id]
 
   tags = {
     Name = "My DB Subnet Group"

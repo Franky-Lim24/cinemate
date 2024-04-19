@@ -56,7 +56,7 @@ resource "aws_ecs_service" "frontend_service" {
   launch_type     = "FARGATE"
 
   network_configuration {
-    subnets         = [aws_subnet.public.id]
+    subnets         = [aws_subnet.public1.id, aws_subnet.public2.id]
     security_groups = [aws_security_group.frontend.id]
     assign_public_ip = true
   }
