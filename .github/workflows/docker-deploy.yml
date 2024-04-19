@@ -1,0 +1,36 @@
+name: Build and Push Docker images
+
+on:
+  push:
+    branches:
+      - deployment
+    paths:
+      - 'frontend/**'
+      - 'backend/**'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: [frontend, backend]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./${{ matrix.app }}
+          file: ./${{ matrix.app }}/Dockerfile
+          push: true
+          tags: frankylim2409/cinemate-${{ matrix.app }}:latest
