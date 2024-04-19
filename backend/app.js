@@ -8,7 +8,7 @@ app.use(express.json());
 app.use(cors());
 
 // Health check
-app.get('/', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.send('Welcome to Cinemate API');
 });
 
