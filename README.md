@@ -18,7 +18,7 @@ Follow these steps to set up Cinemate for local development:
 ### Clone the Repository
 
 ```bash
-git clone [repository URL]
+git clone https://github.com/Franky-Lim24/cinemate.git
 ```
 
 ### Environment Configuration
